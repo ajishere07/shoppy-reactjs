@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.center {
+  @apply font-bold text-sm inline-flex justify-center items-center cursor-pointer hover:text-custom-700;
+}
+
+.header {
+  @apply text-center text-custom-700 font-mono my-8;
+}
+
+.btn {
+  @apply block bg-custom-700 font-bold text-custom-400 py-2 px-4 rounded-lg capitalize hover:bg-custom-400 hover:text-custom-700 w-28 border-2 border-custom-700;
+}
+
+.secondaryBtn {
+  @apply block bg-custom-400 font-bold text-custom-700 py-2 px-4 rounded-lg capitalize hover:bg-custom-700 hover:text-custom-400 w-28 border-2 border-custom-700;
+}
+
+.btnn {
+  @apply block bg-custom-400 font-bold text-custom-700 py-2 px-1 rounded-lg capitalize hover:bg-custom-700 hover:text-custom-400 w-28;
+}
+.checkoutBtn {
+  @apply block bg-custom-400 font-bold text-custom-700 py-2 px-1 rounded-lg capitalize hover:bg-custom-700 hover:text-custom-400 w-full border-2 border-custom-700;
+}
