@@ -10,7 +10,7 @@ export const RegisterForm = ({ set }) => {
     },
   });
   return (
-    <div className="border-2 border-custom-700 w-96 px-4 py-4 rounded-xl">
+    <div className="border-2 border-custom-700 w-96 px-4 py-4 rounded-xl mt-4">
       <h1 className="font-medium text-3xl mb-4">Create An Account</h1>
       <form className="flex flex-col">
         <label htmlFor="Name" className="formLabel">

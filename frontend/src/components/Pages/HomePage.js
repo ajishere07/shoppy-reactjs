@@ -5,6 +5,7 @@ import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 
 import CategoryTab from "../CategoryTab";
 import ProductsGrid from "../ProductsGrid";
+import Navbar from "../Navbar";
 
 function HomePage() {
   const imgForCarousel = {
@@ -14,6 +15,7 @@ function HomePage() {
   };
   return (
     <div>
+      <Navbar />
       <CategoryTab />
       <AppCarousel
         img1={imgForCarousel.img1}

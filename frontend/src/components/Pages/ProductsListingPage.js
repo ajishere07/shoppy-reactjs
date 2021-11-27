@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import ProductsGrid from "../ProductsGrid";
 import { useSelector } from "react-redux";
+import Navbar from "../Navbar";
 
 function ProductsListingPage() {
   const [header, setHeader] = useState("");
@@ -22,6 +23,7 @@ function ProductsListingPage() {
 
   return (
     <div>
+      <Navbar />
       <h1 className="header">{header}</h1>
       <ProductsGrid />
     </div>

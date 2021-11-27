@@ -2,7 +2,7 @@ import React from "react";
 
 export const SignIn = ({ set }) => {
   return (
-    <div className="border-2 border-custom-700 w-96 px-4 py-4 rounded-xl">
+    <div className="border-2 border-custom-700 w-96 px-4 py-4 rounded-xl mt-4">
       <h1 className="font-medium text-3xl mb-4">Sign In</h1>
       <form className="flex flex-col">
         <label htmlFor="email" className="formLabel">
