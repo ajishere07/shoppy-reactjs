@@ -25,7 +25,7 @@ export const SignIn = ({ set }) => {
           }}
           className="cursor-pointer text-center font-semibold text-sm mt-4 hover:text-custom-700 hover:underline"
         >
-          If You Don't Have An Account! Register
+          Don't have an account yet? Register
         </p>
       </form>
     </div>

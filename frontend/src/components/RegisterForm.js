@@ -41,7 +41,7 @@ export const RegisterForm = ({ set }) => {
           }}
           className="cursor-pointer text-center font-semibold text-sm mt-4 hover:text-custom-700 hover:underline"
         >
-          Already Have An Account! Sign In
+          Already have an account! Sign In
         </p>
       </form>
     </div>

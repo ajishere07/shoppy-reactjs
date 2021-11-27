@@ -6,7 +6,7 @@ module.exports = {
       custom: {
         700: "#5198EC",
         400: "#ffffff",
-        200: "#6B7280",
+        200: "#E5E7EB",
       },
     },
     extend: {},
