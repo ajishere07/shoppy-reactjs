@@ -12,7 +12,7 @@ function Navbar() {
         <ShoppyLogo />
       </Link>
       <SearchBar />
-      <div className="flex sm:justify-between justify-evenly items-center w-28 sm:w-32 xl:w-40 md:w-40">
+      <div className="flex sm:justify-between justify-evenly items-center w-28 sm:w-28 xl:w-40 md:w-40">
         <Link to="/auth">
           <span className="cursor-pointer">
             <svg

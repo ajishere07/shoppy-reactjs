@@ -11,11 +11,11 @@
 }
 
 .btn {
-  @apply block bg-custom-700 font-bold text-custom-400 py-2 px-4 rounded-lg capitalize hover:bg-custom-400 hover:text-custom-700 w-28 border-2 border-custom-700;
+  @apply block bg-custom-700 font-bold text-custom-400 py-2 px-4 rounded-lg capitalize hover:bg-custom-400 hover:text-custom-700 xl:w-28 border-2 border-custom-700;
 }
 
 .secondaryBtn {
-  @apply block bg-custom-400 font-bold text-custom-700 py-2 px-4 rounded-lg capitalize hover:bg-custom-700 hover:text-custom-400 w-28 border-2 border-custom-700;
+  @apply block bg-custom-400 font-bold text-custom-700 py-2 px-4 rounded-lg capitalize hover:bg-custom-700 hover:text-custom-400 xl:w-28 border-2 border-custom-700;
 }
 
 .btnn {
