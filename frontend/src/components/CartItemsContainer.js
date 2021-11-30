@@ -7,7 +7,7 @@ function CartItemsContainer() {
   console.log(items);
   return (
     <section
-      className="w-3/4 bg-red-400 my-2 px-2"
+      className="lg:w-3/4 w-full bg-red-400 my-2 px-2 "
       style={{ background: "white", height: "100%" }}
     >
       <span className="font-medium text-3xl">Your Cart</span>

@@ -11,7 +11,7 @@ function SubtotalBox() {
 
   return (
     <aside
-      className="w-1/5 bg-red-400 my-2 px-2 h-full py-2"
+      className="lg:w-1/5 w-full bg-red-400 my-2 px-2 h-full py-2"
       style={{ background: "white" }}
     >
       <div>
