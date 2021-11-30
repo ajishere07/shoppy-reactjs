@@ -26,7 +26,7 @@ export const RegisterForm = ({ set }) => {
       .catch((e) => alert(e.message));
   };
   return (
-    <div className="border-2 border-custom-700 w-96 px-4 py-4 rounded-xl mt-4">
+    <div className="border-2 border-custom-700 w-96 px-4 py-4 rounded-xl mt-4 sm:mx-0 mx-8">
       <h1 className="font-medium text-3xl mb-4">Create An Account</h1>
       <Formik
         validationSchema={validationSchema}

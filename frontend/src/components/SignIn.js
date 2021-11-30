@@ -34,7 +34,7 @@ export const SignIn = ({ set }) => {
       });
   };
   return (
-    <div className="border-2 border-custom-700 w-96 px-4 py-4 rounded-xl mt-4">
+    <div className="border-2 border-custom-700 w-96 px-4 py-4 rounded-xl mt-4 sm:mx-0 mx-8">
       <h1 className="font-medium text-3xl mb-4">Sign In</h1>
       <Formik
         validationSchema={validationSchema}
@@ -56,19 +56,27 @@ export const SignIn = ({ set }) => {
           >
             Sign In
           </button>
-          <hr className="mt-6 w-4/5 mx-auto"/>
-          <p className="inline text-center -mt-3 mx-auto" style={{backgroundColor:"white", width:"30px"}}>or</p>
-          
+          <hr className="mt-6 w-4/5 mx-auto" />
+          <p
+            className="inline text-center -mt-3 mx-auto"
+            style={{ backgroundColor: "white", width: "30px" }}
+          >
+            or
+          </p>
+
           <div
-            className="w-3/5 mx-auto cursor-pointer py-2 rounded-xl mt-2" style={{border:"0.5px solid black"}}
+            className="flex items-center justify-center sm:w-3/5 w-4/6 mx-auto sm:mx-auto cursor-pointer py-2 rounded-xl mt-2"
+            style={{ border: "0.5px solid black" }}
             onClick={authHandleGoogleSignIn}
           >
             <img
-              className="w-6 h-6 inline mx-2"
+              className="sm:w-6 sm:h-6 w-6 h-6 inline sm:mr-2 mr-1"
               src="https://img.icons8.com/color/2x/google-logo.png"
               alt="icon"
             />
-            <p className="inline text-sm font-normal">Continue With Google</p>
+            <p className="inline font-normal text-sm sm:text-sm">
+              Continue With Google
+            </p>
           </div>
           {/* <button
             onClick={authHandleGoogleSignIn(authe, googleAuthProvider)}
