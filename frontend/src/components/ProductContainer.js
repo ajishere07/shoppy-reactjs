@@ -2,9 +2,23 @@ import React from "react";
 import CurrencyFormat from "react-currency-format";
 import { useSelector, useDispatch } from "react-redux";
 import { addToCart, increaseCartItems } from "../reduxSlices/cartItems";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer, toast } from "react-toastify";
 
 function ProductContainer() {
   const dispatch = useDispatch();
+  const toastMessage = () => {
+    console.log("runs");
+    toast.warn("Sign In First", {
+      position: "top-left",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  };
 
   const { img, name, price, id, qty } = useSelector((state) => state.data);
 
@@ -25,7 +39,12 @@ function ProductContainer() {
           prefix={"₹"}
           renderText={(value) => <h4 className="mb-2">{value}</h4>}
         />
-        <button className="btn w-full lg:w-28 mb-4 lg:m-0">buy</button>
+        <button
+          className="btn w-full lg:w-28 mb-4 lg:m-0"
+          onClick={toastMessage}
+        >
+          buy
+        </button>
         <button
           className="secondaryBtn w-full lg:w-28"
           onClick={() => {
@@ -35,6 +54,7 @@ function ProductContainer() {
         >
           add cart
         </button>
+        <ToastContainer />
       </section>
     </main>
   );
