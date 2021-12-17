@@ -7,6 +7,7 @@ module.exports = {
         700: "#5198EC",
         400: "#ffffff",
         200: "#E5E7EB",
+        100: "#DC2626"
       },
     },
     extend: {},

@@ -2,9 +2,43 @@ import React from "react";
 import { Field, Formik, Form } from "formik";
 import * as yup from "yup";
 import ErrorMessageCustom from "./ErrorMessageCustom";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { authe } from "../configuration/firebase";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { setCredentials } from "../reduxSlices/userCredentials";
+import { useDispatch } from "react-redux";
 
+const handleError = async (response) => {
+  if (!response.ok) {
+    const { message } = await response.json();
+    console.log("message:", message);
+    throw Error(message);
+  }
+  return response.json();
+};
+
+function toastMessage(msg) {
+  if (msg === "success") {
+    toast.success("Registered", {
+      position: "top-left",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+    return;
+  }
+  toast.error(msg, {
+    position: "top-left",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
+}
 const validationSchema = yup.object({
   name: yup.string().required("name is required"),
   email: yup.string().required("email is required"),
@@ -18,13 +52,37 @@ const validationSchema = yup.object({
   repassword: yup.string().required("Re-password is required"),
 });
 export const RegisterForm = ({ set }) => {
-  const authHandleRegister = (a, email, password) => {
-    createUserWithEmailAndPassword(a, email, password)
-      .then((auth) => {
-        alert("You are registered now, LOGIN ");
+  const dispatch = useDispatch();
+
+  const authHandleRegister = (name, email, password) => {
+    fetch("http://localhost:5000/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name,
+        email,
+        password,
+      }),
+    })
+      .then(handleError)
+      .then(async () => {
+        await dispatch(setCredentials({ name, email, password }));
+        await toastMessage("success");
+        set("account");
       })
-      .catch((e) => alert(e.message));
+      .catch((error) => {
+        // if (error.message === "Unexpected token U in JSON at position 0") {
+        //   console.log("User Already Exists");
+        //   toastMessage("User Already Exists");
+        //   return;
+        // }
+        console.log(error.message);
+        toastMessage(error.message);
+      });
   };
+
   return (
     <div className="border-2 border-custom-700 w-96 px-4 py-4 rounded-xl mt-4 sm:mx-0 mx-8">
       <h1 className="font-medium text-3xl mb-4">Create An Account</h1>
@@ -34,7 +92,7 @@ export const RegisterForm = ({ set }) => {
         onSubmit={(values) => {
           // console.log(values);
           if (values.password === values.repassword) {
-            authHandleRegister(authe, values.email, values.password);
+            authHandleRegister(values.name, values.email, values.password);
           } else {
             alert("Re-enter the exact password ");
           }
@@ -61,7 +119,7 @@ export const RegisterForm = ({ set }) => {
           </button>
           <p
             onClick={() => {
-              set(false);
+              set("login");
             }}
             className="cursor-pointer text-center font-semibold text-sm mt-4 hover:text-custom-700 hover:underline"
           >
@@ -69,6 +127,7 @@ export const RegisterForm = ({ set }) => {
           </p>
         </Form>
       </Formik>
+      <ToastContainer />
     </div>
   );
 };

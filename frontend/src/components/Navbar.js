@@ -13,7 +13,7 @@ function Navbar() {
       </Link>
       <SearchBar />
       <div className="flex sm:justify-between justify-evenly items-center w-28 sm:w-28 xl:w-40 md:w-40">
-        <Link to="/auth">
+        <Link to="/account">
           <span className="cursor-pointer">
             <svg
               className="w-4 md:w-7 xl:w-7"

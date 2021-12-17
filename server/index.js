@@ -5,12 +5,14 @@ const mobileData = require("./ProductsData/MobilesData");
 const booksData = require("./ProductsData/BooksData");
 const electronicsData = require("./ProductsData/ElectronicsData");
 const mongoose = require("mongoose");
+const cors = require("cors");
+const ObjectId = require("mongoose").Types.ObjectId;
 
 //connecting the mongoose
 
 mongoose.connect("mongodb://localhost:27017/Ecomm");
 
-//connecting the mongoose
+//connecting the mongooseEcomm
 
 dotenv.config();
 // mongo db experimentation
@@ -40,7 +42,113 @@ async function getData() {
   });
 }
 
+// schemaa for users data
+const userSchema = new mongoose.Schema({
+  name: String,
+  email: String,
+  password: String,
+});
+const User = mongoose.model("User", userSchema);
+
+app.use(cors());
+app.use(express.json());
+
+//schema for user's addresses data
+
+const addressSchema = new mongoose.Schema({
+  userId: mongoose.Schema.ObjectId,
+  addressArray: [{ id: Number, address: String }],
+});
+
+const Addresses = mongoose.model("Addresses", addressSchema);
+
+//register users endpoint
+
+app.post("/register", async (req, res) => {
+  const { name, email, password } = req.body;
+  const user = await User.findOne({ email }).exec();
+  if (user) {
+    res.status(500);
+    res.json({
+      message: "User already exists",
+    });
+    return;
+  }
+  await User.create({ name, email, password });
+  res.json({
+    message: "success",
+  });
+});
 getData();
+
+//login users endpoint
+app.post("/login", async (req, res) => {
+  const { email, password } = req.body;
+  const user = await User.findOne({ email }).exec();
+  if (!user || user.password !== password) {
+    res.status(403);
+    res.json({
+      message: "Invalid Login",
+    });
+    return;
+  }
+
+  res.json({
+    name: user.name,
+    message: "success",
+  });
+});
+
+//user address data receive endpoint
+app.post("/useraddresses", async (req, res) => {
+  const { authorization } = req.headers;
+  const [, token] = authorization.split(" ");
+  const [email, password] = token.split(":");
+  const addresses = req.body;
+  // console.log(addresses);
+  const user = await User.findOne({ email }).exec();
+  if (!user || user.password !== password) {
+    res.status(403);
+    res.json({
+      message: "Invalid access ",
+    });
+    return;
+  }
+
+  const data = await Addresses.findOne({ userId: user._id }).exec();
+  // console.log(data);
+  if (!data) {
+    await Addresses.create({
+      userId: user._id,
+      addressArray: addresses,
+    });
+  } else {
+    data.addressArray = await addresses;
+    await data.save();
+  }
+  // console.log(data);
+  res.json(data);
+});
+
+//get request for fetching the addressess
+app.get("/useraddress", async (req, res) => {
+  const { authorization } = req.headers;
+  const [, token] = authorization.split(" ");
+  const [email, password] = token.split(":");
+  const user = await User.findOne({ email }).exec();
+  if (!user || user.password !== password) {
+    res.status(403);
+    res.json({
+      message: "Invalid access",
+    });
+    return;
+  }
+  
+  const { addressArray } = await Addresses.findOne({ userId: user._id }).exec();
+  console.log(addressArray);
+
+  res.json(addressArray);
+});
 
 // mongo db experimentation
 
@@ -56,4 +164,6 @@ app.get("/api/products", (req, res) => {
   res.json(allProducts);
 });
 
-app.listen(PORT, console.log("this is a server"));
+app.listen(PORT, () => {
+  console.log(`running at ${PORT}!`);
+});

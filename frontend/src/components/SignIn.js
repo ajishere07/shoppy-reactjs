@@ -4,6 +4,10 @@ import * as yup from "yup";
 import ErrorMessageCustom from "./ErrorMessageCustom";
 import { authe, googleAuthProvider } from "../configuration/firebase.js";
 import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import { ToastContainer, toast } from "react-toastify";
+
+import {useDispatch} from 'react-redux'
+import {setCredentials } from '../reduxSlices/userCredentials'
 
 const validationSchema = yup.object({
   email: yup.string().required("name is required"),
@@ -15,15 +19,87 @@ const validationSchema = yup.object({
     )
     .required("password is required"),
 });
-
+function toastLoginned(msg) {
+  if (msg !== "login") {
+    toast.error(msg, {
+      position: "top-left",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+    return;
+  }
+  toast.success("Login Successfully", {
+    position: "top-left",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
+}
+const handleError = async (response) => {
+  if (!response.ok) {
+    const { message } = await response.json();
+    console.log("message:", message);
+    throw Error(message);
+  }
+  return response.json()
+  
+};
 export const SignIn = ({ set }) => {
-  const authHandleLogin = (a, email, password) => {
-    signInWithEmailAndPassword(a, email, password)
-      .then((auth) => {
-        alert("succefully login");
+  const dispatch = useDispatch();
+  
+
+  const authHandleLogin = (email, password) => {
+    fetch("http://localhost:5000/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email,
+        password,
+      }),
+    })
+      .then(async (response) => {
+  if (!response.ok) {
+    const { message } = await response.json();
+    console.log("message:", message);
+    throw Error(message);
+  }
+  const {name} = await response.json();
+  console.log(name)
+  dispatch(setCredentials({name,email,password}))
+  
+})
+      
+      .then(async () => {
+        await toastLoginned("login");
+        await set("account"); 
+        return
       })
-      .catch((e) => alert(e.message));
+      .catch((error) => {
+        if (error.message === "Unexpected token U in JSON at position 0") {
+          console.log("User Already Exists");
+          toastLoginned("User Already Exists");
+          return;
+        }
+        console.log(error.message);
+        toastLoginned(error.message);
+      });
   };
+  // const authHandleLogin = (a, email, password) => {
+  //   signInWithEmailAndPassword(a, email, password)
+  //     .then((auth) => {
+  //       alert("succefully login");
+  //     })
+  //     .catch((e) => alert(e.message));
+  // };
   const authHandleGoogleSignIn = () => {
     signInWithPopup(authe, googleAuthProvider)
       .then((result) => {
@@ -40,7 +116,7 @@ export const SignIn = ({ set }) => {
         validationSchema={validationSchema}
         initialValues={{ email: "", password: "" }}
         onSubmit={(values) => {
-          authHandleLogin(authe, values.email, values.password);
+          authHandleLogin(values.email, values.password);
         }}
       >
         <Form className="flex flex-col">
@@ -78,15 +154,10 @@ export const SignIn = ({ set }) => {
               Continue With Google
             </p>
           </div>
-          {/* <button
-            onClick={authHandleGoogleSignIn(authe, googleAuthProvider)}
-            className="bg-custom-700 rounded-xl mt-4 h-10 text-custom-400 text-lg font-semibold "
-          >
-            Sign In
-          </button> */}
+
           <p
             onClick={() => {
-              set(true);
+              set("register");
             }}
             className="cursor-pointer text-center font-semibold text-sm mt-4 hover:text-custom-700 hover:underline"
           >
@@ -94,6 +165,7 @@ export const SignIn = ({ set }) => {
           </p>
         </Form>
       </Formik>
+      <ToastContainer />
     </div>
   );
 };
