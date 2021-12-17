@@ -20,14 +20,16 @@ function AuthenticationPage() {
     if(add === null){
       return;
     }
-    await setAddress([...address, { id: address.length, address: add }]);
+    const newAddress = {id:address.length, address:add};
+     const newAddressArray = [...address, newAddress]
+     setAddress(newAddressArray);
     fetch("http://localhost:5000/useraddresses", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Basic ${email}:${password}`,
       },
-      body: JSON.stringify(address),
+      body: JSON.stringify(newAddressArray),
     });
     console.log("addded");
   }
