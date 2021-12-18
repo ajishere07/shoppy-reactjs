@@ -2,16 +2,18 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import CurrencyFormat from "react-currency-format";
 import { ToastContainer, toast } from "react-toastify";
+import { Link } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 
 function SubtotalBox() {
+  const { isAuthenticated } = useSelector((state) => state.credential);
   const { items, totalItems, totalAmount } = useSelector(
     (state) => state.items
   );
 
-  const toastMessage = () => {
+  const toastMessage = (msg) => {
     console.log("runs");
-    toast.warn("Sign In First", {
+    toast.warn(msg, {
       position: "top-left",
       autoClose: 5000,
       hideProgressBar: false,
@@ -20,6 +22,14 @@ function SubtotalBox() {
       draggable: true,
       progress: undefined,
     });
+  };
+
+  const handleCheckout = () => {
+    if (!isAuthenticated) {
+      toastMessage("Sign in first");
+      return;
+    }
+    toastMessage("yout are ready to purchase");
   };
 
   return (
@@ -45,9 +55,11 @@ function SubtotalBox() {
         </span>
       </div>
 
-      <button className="checkoutBtn" onClick={toastMessage}>
-        Checkout
-      </button>
+      <Link to="payment">
+        <button className="checkoutBtn" onClick={handleCheckout}>
+          Checkout
+        </button>
+      </Link>
       <ToastContainer />
     </aside>
   );

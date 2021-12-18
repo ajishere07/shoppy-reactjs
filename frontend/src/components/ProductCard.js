@@ -11,7 +11,7 @@ function ProductCard({ img, name, price, id, img2, img3, img4, qty }) {
     dispatch(getID(id));
     dispatch(dataCollection({ img, id, name, price, img2, img3, img4, qty }));
   };
-  console.log(id);
+  
   return (
     <Link to="/buy">
       <div className="hover:shadow-xl cursor-pointer" onClick={fun}>

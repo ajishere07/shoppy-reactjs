@@ -6,8 +6,8 @@ import { authe, googleAuthProvider } from "../configuration/firebase.js";
 import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { ToastContainer, toast } from "react-toastify";
 
-import {useDispatch} from 'react-redux'
-import {setCredentials } from '../reduxSlices/userCredentials'
+import { useDispatch } from "react-redux";
+import { setCredentials } from "../reduxSlices/userCredentials";
 
 const validationSchema = yup.object({
   email: yup.string().required("name is required"),
@@ -48,12 +48,10 @@ const handleError = async (response) => {
     console.log("message:", message);
     throw Error(message);
   }
-  return response.json()
-  
+  return response.json();
 };
 export const SignIn = ({ set }) => {
   const dispatch = useDispatch();
-  
 
   const authHandleLogin = (email, password) => {
     fetch("http://localhost:5000/login", {
@@ -67,21 +65,22 @@ export const SignIn = ({ set }) => {
       }),
     })
       .then(async (response) => {
-  if (!response.ok) {
-    const { message } = await response.json();
-    console.log("message:", message);
-    throw Error(message);
-  }
-  const {name} = await response.json();
-  console.log(name)
-  dispatch(setCredentials({name,email,password}))
-  
-})
-      
+        if (!response.ok) {
+          const { message } = await response.json();
+          console.log("message:", message);
+          throw Error(message);
+        }
+        const { name } = await response.json();
+        console.log(name);
+        dispatch(
+          setCredentials({ name, email, password, isAuthenticated: true })
+        );
+      })
+
       .then(async () => {
         await toastLoginned("login");
-        await set("account"); 
-        return
+        await set("account");
+        return;
       })
       .catch((error) => {
         if (error.message === "Unexpected token U in JSON at position 0") {

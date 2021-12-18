@@ -4,7 +4,10 @@ import { RegisterForm } from "../RegisterForm";
 import Navbar from "../Navbar";
 import { Formik, Form } from "formik";
 import { SignIn } from "../SignIn";
-import { selectAddress } from "../../reduxSlices/userCredentials";
+import {
+  selectAddress,
+  unsetCredentials,
+} from "../../reduxSlices/userCredentials";
 import Addresses from "../Addresses";
 
 function AuthenticationPage() {
@@ -13,16 +16,21 @@ function AuthenticationPage() {
   const dispatch = useDispatch();
 
   const { name, email, password } = useSelector((state) => state.credential);
+  //handling logging out function
+  const handleLogout = () => {
+    setRenderRegisterPage("login");
+    dispatch(unsetCredentials());
+  };
 
   //adding the address to the address array
 
   async function addAddressFun(add) {
-    if(add === null){
+    if (add === null) {
       return;
     }
-    const newAddress = {id:address.length, address:add};
-     const newAddressArray = [...address, newAddress]
-     setAddress(newAddressArray);
+    const newAddress = { id: address.length, address: add };
+    const newAddressArray = [...address, newAddress];
+    setAddress(newAddressArray);
     fetch("http://localhost:5000/useraddresses", {
       method: "POST",
       headers: {
@@ -48,10 +56,9 @@ function AuthenticationPage() {
         "Content-Type": "application/json",
         Authorization: `Basic ${email}:${password}`,
       },
-    }).then((response)=> response.json()).then(
-      (addressArray)=>setAddress(addressArray))
-
-    
+    })
+      .then((response) => response.json())
+      .then((addressArray) => setAddress(addressArray));
   }, [email]);
   //adding the address to the address array
 
@@ -135,10 +142,7 @@ function AuthenticationPage() {
               </button>
             </Form>
           </Formik>
-          <button
-            className="logoutBtn mx-auto my-2"
-            onClick={() => setRenderRegisterPage("login")}
-          >
+          <button className="logoutBtn mx-auto my-2" onClick={handleLogout}>
             Logout
           </button>
         </div>

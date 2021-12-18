@@ -4,7 +4,8 @@ const initialState = {
   name: "",
   email: "",
   password: "",
-  selectedAddress:""
+  selectedAddress: "",
+  isAuthenticated: false,
 };
 
 const userCredentials = createSlice({
@@ -15,17 +16,20 @@ const userCredentials = createSlice({
       state.name = action.payload.name;
       state.email = action.payload.email;
       state.password = action.payload.password;
+      state.isAuthenticated = action.payload.isAuthenticated;
     },
-    // loginCredentials(state,action){
-    //   state.name = action.payload.name
-    //   state.email = action.payload.email;
-    //   state.password = action.payload.password
-    // },
-    selectAddress(state, action){
+    unsetCredentials(state) {
+      state.name = "";
+      state.email = "";
+      state.password = "";
+      state.isAuthenticated = false;
+    },
+    selectAddress(state, action) {
       state.selectedAddress = action.payload.address;
-    }
+    },
   },
 });
 
-export const { setCredentials, selectAddress,loginCredentials} = userCredentials.actions;
+export const { setCredentials, selectAddress, unsetCredentials } =
+  userCredentials.actions;
 export default userCredentials.reducer;

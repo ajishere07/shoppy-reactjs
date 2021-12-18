@@ -4,12 +4,15 @@ import { useSelector, useDispatch } from "react-redux";
 import { addToCart, increaseCartItems } from "../reduxSlices/cartItems";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
+import { Link } from "react-router-dom";
 
 function ProductContainer() {
   const dispatch = useDispatch();
-  const toastMessage = () => {
-    console.log("runs");
-    toast.warn("Sign In First", {
+
+  const { isAuthenticated } = useSelector((state) => state.credential);
+  const { img, name, price, id, qty } = useSelector((state) => state.data);
+  const toastMessage = (msg) => {
+    toast.warn(msg, {
       position: "top-left",
       autoClose: 5000,
       hideProgressBar: false,
@@ -20,8 +23,13 @@ function ProductContainer() {
     });
   };
 
-  const { img, name, price, id, qty } = useSelector((state) => state.data);
-
+  const handleBuyNow = () => {
+    if (!isAuthenticated) {
+      toastMessage("Signin First");
+      return;
+    }
+    toastMessage("your are ready to purchase");
+  };
   return (
     <main className="xl:flex xl:mx-12 lg:pt-12 sm:flex sm:flex-col xl:flex-row lg:flex-row">
       <img
@@ -39,12 +47,14 @@ function ProductContainer() {
           prefix={"₹"}
           renderText={(value) => <h4 className="mb-2">{value}</h4>}
         />
-        <button
-          className="btn w-full lg:w-28 mb-4 lg:m-0"
-          onClick={toastMessage}
-        >
-          buy
-        </button>
+        <Link to="payment">
+          <button
+            className="btn w-full lg:w-28 mb-4 lg:m-0"
+            onClick={handleBuyNow}
+          >
+            buy
+          </button>
+        </Link>
         <button
           className="secondaryBtn w-full lg:w-28"
           onClick={() => {

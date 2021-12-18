@@ -68,7 +68,9 @@ export const RegisterForm = ({ set }) => {
     })
       .then(handleError)
       .then(async () => {
-        await dispatch(setCredentials({ name, email, password }));
+        await dispatch(
+          setCredentials({ name, email, password, isAuthenticated: true })
+        );
         await toastMessage("success");
         set("account");
       })
