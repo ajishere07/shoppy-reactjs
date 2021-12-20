@@ -25,11 +25,7 @@ function SubtotalBox() {
   };
 
   const handleCheckout = () => {
-    if (!isAuthenticated) {
-      toastMessage("Sign in first");
-      return;
-    }
-    toastMessage("yout are ready to purchase");
+    toastMessage("Sign in first");
   };
 
   return (
@@ -55,11 +51,17 @@ function SubtotalBox() {
         </span>
       </div>
 
-      <Link to="payment">
+      {isAuthenticated ? (
+        <Link to="payment">
+          <button className="checkoutBtn" onClick={handleCheckout}>
+            Checkout
+          </button>
+        </Link>
+      ) : (
         <button className="checkoutBtn" onClick={handleCheckout}>
           Checkout
         </button>
-      </Link>
+      )}
       <ToastContainer />
     </aside>
   );
