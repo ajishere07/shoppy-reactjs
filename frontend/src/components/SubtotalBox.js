@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import CurrencyFormat from "react-currency-format";
 import { ToastContainer, toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
+import { checkoutItems } from "../reduxSlices/checkSlice";
 
 function SubtotalBox() {
+  const dispatch = useDispatch();
   const { isAuthenticated } = useSelector((state) => state.credential);
   const { items, totalItems, totalAmount } = useSelector(
     (state) => state.items
@@ -26,6 +28,7 @@ function SubtotalBox() {
 
   const handleCheckout = () => {
     toastMessage("Sign in first");
+    dispatch(checkoutItems());
   };
 
   return (
