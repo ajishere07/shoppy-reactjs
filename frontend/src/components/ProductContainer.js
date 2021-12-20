@@ -7,7 +7,6 @@ import { ToastContainer, toast } from "react-toastify";
 import { Link } from "react-router-dom";
 
 function ProductContainer() {
-  
   const dispatch = useDispatch();
 
   const { isAuthenticated } = useSelector((state) => state.credential);
@@ -23,10 +22,10 @@ function ProductContainer() {
       progress: undefined,
     });
   };
-  const handleBuyNow =() =>{
-    toastMessage("Sign in first")
-  }
-  
+  const handleBuyNow = () => {
+    toastMessage("Sign in first");
+  };
+
   return (
     <main className="xl:flex xl:mx-12 lg:pt-12 sm:flex sm:flex-col xl:flex-row lg:flex-row">
       <img
@@ -44,13 +43,18 @@ function ProductContainer() {
           prefix={"₹"}
           renderText={(value) => <h4 className="mb-2">{value}</h4>}
         />
-        {isAuthenticated ? <Link to="payment">
-        <button className="btn w-full lg:w-28 mb-4 lg:m-0">
-          buy
-        </button>
-        </Link>:<button className="btn w-full lg:w-28 mb-4 lg:m-0" onClick={handleBuyNow}>
-          buy
-        </button>}
+        {isAuthenticated ? (
+          <Link to="payment">
+            <button className="btn w-full lg:w-28 mb-4 lg:m-0">buy</button>
+          </Link>
+        ) : (
+          <button
+            className="btn w-full lg:w-28 mb-4 lg:m-0"
+            onClick={handleBuyNow}
+          >
+            buy
+          </button>
+        )}
         <button
           className="secondaryBtn w-full lg:w-28"
           onClick={() => {
