@@ -139,21 +139,6 @@ export const SignIn = ({ set }) => {
             or
           </p>
 
-          <div
-            className="flex items-center justify-center sm:w-3/5 w-4/6 mx-auto sm:mx-auto cursor-pointer py-2 rounded-xl mt-2"
-            style={{ border: "0.5px solid black" }}
-            onClick={authHandleGoogleSignIn}
-          >
-            <img
-              className="sm:w-6 sm:h-6 w-6 h-6 inline sm:mr-2 mr-1"
-              src="https://img.icons8.com/color/2x/google-logo.png"
-              alt="icon"
-            />
-            <p className="inline font-normal text-sm sm:text-sm">
-              Continue With Google
-            </p>
-          </div>
-
           <p
             onClick={() => {
               set("register");
