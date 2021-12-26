@@ -2,8 +2,7 @@ import React from "react";
 import { Form, Formik, Field, ErrorMessage } from "formik";
 import * as yup from "yup";
 import ErrorMessageCustom from "./ErrorMessageCustom";
-import { authe, googleAuthProvider } from "../configuration/firebase.js";
-import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+
 import { ToastContainer, toast } from "react-toastify";
 
 import { useDispatch } from "react-redux";
@@ -92,22 +91,7 @@ export const SignIn = ({ set }) => {
         toastLoginned(error.message);
       });
   };
-  // const authHandleLogin = (a, email, password) => {
-  //   signInWithEmailAndPassword(a, email, password)
-  //     .then((auth) => {
-  //       alert("succefully login");
-  //     })
-  //     .catch((e) => alert(e.message));
-  // };
-  const authHandleGoogleSignIn = () => {
-    signInWithPopup(authe, googleAuthProvider)
-      .then((result) => {
-        alert("signed in with your google account");
-      })
-      .catch((error) => {
-        console.log(error.message);
-      });
-  };
+
   return (
     <div className="border-2 border-custom-700 w-96 px-4 py-4 rounded-xl mt-4 sm:mx-0 mx-8">
       <h1 className="font-medium text-3xl mb-4">Sign In</h1>
