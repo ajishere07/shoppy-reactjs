@@ -9,6 +9,7 @@ const initialState = {
   img2: "",
   img3: "",
   img4: "",
+  genre: "",
 };
 
 const productData = createSlice({
@@ -30,6 +31,7 @@ const productData = createSlice({
       state.img2 = action.payload.img2;
       state.img3 = action.payload.img3;
       state.img4 = action.payload.img4;
+      state.genre = action.payload.genre;
     },
   },
 });

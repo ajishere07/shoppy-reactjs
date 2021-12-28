@@ -27,7 +27,7 @@ function ProductContainer() {
   };
 
   return (
-    <main className="xl:flex xl:mx-12 lg:pt-12 sm:flex sm:flex-col xl:flex-row lg:flex-row">
+    <main className="xl:flex xl:mx-12 lg:pt-12 sm:flex sm:flex-col xl:flex-row lg:flex-row border-b-2 border-slate-400 pb-8">
       <img
         className="h-60 object-contain lg:px-28 mx-auto lg:m-0"
         src={img}

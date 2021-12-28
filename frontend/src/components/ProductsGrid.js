@@ -9,7 +9,7 @@ import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 function ProductsGrid() {
   const [products, setProducts] = useState([]);
   const [loader, setLoader] = useState(false);
-
+  const { genre } = useSelector((state) => state.data);
   const { isElectronicsPage, isMobilesPage, isBooksPage } = useSelector(
     (state) => state.check
   );
@@ -25,18 +25,28 @@ function ProductsGrid() {
         setLoader(true);
         const res = await axios.get("/api/books");
         setProducts(res.data);
+
         setLoader(false);
       } else if (isMobilesPage) {
         setLoader(true);
         const res = await axios.get("/api/mobiles");
         setProducts(res.data);
+
         setLoader(false);
       }
     }
 
     fetchData();
   }, []);
-
+  // console.log(products);
+  useEffect(() => {
+    if (genre !== "" && products.length !== 0) {
+      let updatedProducts = products.filter((product) => {
+        return product.Genre === genre;
+      });
+      setProducts(updatedProducts);
+    }
+  }, [genre]);
   return (
     <>
       {loader ? (
@@ -50,6 +60,7 @@ function ProductsGrid() {
               key={a._id}
               id={a._id}
               qty={a.Qty}
+              genre={a.Genre}
               img={a.img}
               img2={a.img2}
               img3={a.img3}

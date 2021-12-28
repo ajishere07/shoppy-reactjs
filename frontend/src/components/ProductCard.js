@@ -4,14 +4,16 @@ import { Link } from "react-router-dom";
 import { dataCollection, getID } from "../reduxSlices/productData";
 import CurrencyFormat from "react-currency-format";
 
-function ProductCard({ img, name, price, id, img2, img3, img4, qty }) {
+function ProductCard({ img, name, price, id, img2, img3, img4, qty, genre }) {
   const dispatch = useDispatch();
 
   const fun = () => {
     dispatch(getID(id));
-    dispatch(dataCollection({ img, id, name, price, img2, img3, img4, qty }));
+    dispatch(
+      dataCollection({ img, id, name, price, img2, img3, img4, qty, genre })
+    );
   };
-  
+
   return (
     <Link to="/buy">
       <div className="hover:shadow-xl cursor-pointer" onClick={fun}>
