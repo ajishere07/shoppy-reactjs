@@ -8,17 +8,23 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const ObjectId = require("mongoose").Types.ObjectId;
 
+dotenv.config();
 //connecting the mongoose
 
-mongoose.connect("mongodb://localhost:27017/Ecomm");
+mongoose.connect(process.env.DATABASE, (err) => {
+  if (err) {
+    console.log(err.message);
+    return;
+  }
+  console.log("Database connected");
+});
 
 //connecting the mongooseEcomm
 
-dotenv.config();
 // mongo db experimentation
 
 const { MongoClient } = require("mongodb");
-const url = process.env.url;
+const url = process.env.DATABASE;
 const client = new MongoClient(url);
 const database = "Ecomm";
 
@@ -143,9 +149,8 @@ app.get("/useraddress", async (req, res) => {
     });
     return;
   }
-  
+
   const { addressArray } = await Addresses.findOne({ userId: user._id }).exec();
-  console.log(addressArray);
 
   res.json(addressArray);
 });
