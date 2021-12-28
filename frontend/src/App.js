@@ -5,14 +5,12 @@ import ProductsListingPage from "./components/Pages/ProductsListingPage";
 
 import AuthenticationPage from "./components/Pages/AuthenticationPage";
 import ProductPage from "./components/Pages/ProductPage";
-import Navbar from "./components/Navbar";
 
 import StripeCheckoutPage from "./components/StripeComponents/StripeCheckoutPage";
 
 function App() {
   return (
     <div>
-      {/* <Navbar /> */}
       <Switch>
         <Route exact path="/" component={HomePage} />
         <Route path="/cart" component={CartPage} />

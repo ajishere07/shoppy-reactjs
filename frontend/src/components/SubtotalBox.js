@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import CurrencyFormat from "react-currency-format";
 import { ToastContainer, toast } from "react-toastify";
@@ -9,9 +9,7 @@ import { checkoutItems } from "../reduxSlices/checkSlice";
 function SubtotalBox() {
   const dispatch = useDispatch();
   const { isAuthenticated } = useSelector((state) => state.credential);
-  const { items, totalItems, totalAmount } = useSelector(
-    (state) => state.items
-  );
+  const { totalItems, totalAmount } = useSelector((state) => state.items);
 
   const toastMessage = (msg) => {
     console.log("runs");

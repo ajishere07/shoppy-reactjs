@@ -14,23 +14,27 @@ function ProductsGrid() {
     (state) => state.check
   );
 
-  useEffect(async () => {
-    if (isElectronicsPage) {
-      setLoader(true);
-      const res = await axios.get("/api/electronics");
-      setProducts(res.data);
-      setLoader(false);
-    } else if (isBooksPage) {
-      setLoader(true);
-      const res = await axios.get("/api/books");
-      setProducts(res.data);
-      setLoader(false);
-    } else if (isMobilesPage) {
-      setLoader(true);
-      const res = await axios.get("/api/mobiles");
-      setProducts(res.data);
-      setLoader(false);
+  useEffect(() => {
+    async function fetchData() {
+      if (isElectronicsPage) {
+        setLoader(true);
+        const res = await axios.get("/api/electronics");
+        setProducts(res.data);
+        setLoader(false);
+      } else if (isBooksPage) {
+        setLoader(true);
+        const res = await axios.get("/api/books");
+        setProducts(res.data);
+        setLoader(false);
+      } else if (isMobilesPage) {
+        setLoader(true);
+        const res = await axios.get("/api/mobiles");
+        setProducts(res.data);
+        setLoader(false);
+      }
     }
+
+    fetchData();
   }, []);
 
   return (

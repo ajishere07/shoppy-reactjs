@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Formik, Field, ErrorMessage } from "formik";
+import { Form, Formik, Field } from "formik";
 import * as yup from "yup";
 import ErrorMessageCustom from "./ErrorMessageCustom";
 
@@ -41,14 +41,14 @@ function toastLoginned(msg) {
     progress: undefined,
   });
 }
-const handleError = async (response) => {
-  if (!response.ok) {
-    const { message } = await response.json();
-    console.log("message:", message);
-    throw Error(message);
-  }
-  return response.json();
-};
+// const handleError = async (response) => {
+//   if (!response.ok) {
+//     const { message } = await response.json();
+//     console.log("message:", message);
+//     throw Error(message);
+//   }
+//   return response.json();
+// };
 export const SignIn = ({ set }) => {
   const dispatch = useDispatch();
 
@@ -76,9 +76,9 @@ export const SignIn = ({ set }) => {
         );
       })
 
-      .then(async () => {
-        await toastLoginned("login");
-        await set("account");
+      .then(() => {
+        toastLoginned("login");
+        set("account");
         return;
       })
       .catch((error) => {

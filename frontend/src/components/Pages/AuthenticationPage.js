@@ -17,6 +17,7 @@ function AuthenticationPage() {
 
   const { name, email, password } = useSelector((state) => state.credential);
   //handling logging out function
+
   const handleLogout = () => {
     setRenderRegisterPage("login");
     dispatch(unsetCredentials());
@@ -41,14 +42,12 @@ function AuthenticationPage() {
     });
     console.log("addded");
   }
-  // useEffect(() => {
-
-  // }, [address]);
 
   useEffect(() => {
     if (email === "") {
       return;
     }
+    setRenderRegisterPage("account");
     console.log("it runs");
     fetch("http://localhost:5000/useraddress", {
       method: "GET",
@@ -61,10 +60,6 @@ function AuthenticationPage() {
       .then((addressArray) => setAddress(addressArray));
   }, [email]);
   //adding the address to the address array
-
-  //address data send to the backend
-  // const persist = () => {
-  //address data send to the backend
 
   //authentication page render checks
 
@@ -82,9 +77,6 @@ function AuthenticationPage() {
     );
   else {
     return (
-      // <div className="flex items-center justify-center">
-      //   <SignIn set={setRenderRegisterPage} />
-      // </div>
       <div>
         <Navbar />
         <div className="max-w-lg border-2 border-black mx-auto py-6 px-4 mt-6 shadow-xl">

@@ -10,12 +10,15 @@ function ProductsListingPage() {
     (state) => state.check
   );
   useEffect(() => {
+    //if user clicks on the Electronic tab useEffect will render the electronics data
     if (isElectronicsPage) {
       setHeader("Electronics Items");
     }
+    //if user clicks on the Mobiles tab useEffect will render the mobiles data
     if (isMobilesPage) {
       setHeader("Mobiles");
     }
+    //if user clicks on the Books tab useEffect will render the books data
     if (isBooksPage) {
       setHeader("Books");
     }

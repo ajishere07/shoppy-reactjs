@@ -1,12 +1,11 @@
 import React from "react";
 import QuantityBox from "./QuantityBox";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { decreaseQuantity, increaseQuantity } from "../reduxSlices/cartItems";
 import CurrencyFormat from "react-currency-format";
 
 function CartItemContainer({ img, name, id, price, qty }) {
   const dispatch = useDispatch();
-  // const { items } = useSelector((state) => state.items);
 
   const increaseQty = () => {
     dispatch(increaseQuantity(id));
