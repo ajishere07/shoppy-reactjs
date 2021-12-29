@@ -7,6 +7,7 @@ import Loader from "react-loader-spinner";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 
 function ProductsGrid() {
+  let { searchQuery } = useSelector((state) => state.featurefilter);
   const [products, setProducts] = useState([]);
   const [loader, setLoader] = useState(false);
   const { genre } = useSelector((state) => state.data);
@@ -55,20 +56,30 @@ function ProductsGrid() {
         </div>
       ) : (
         <section className="grid sm:grid-cols-2 lg:grid-cols-3 md:w-auto xl:grid-cols-4 gap-16 mx-12 ">
-          {products?.map((a) => (
-            <ProductCard
-              key={a._id}
-              id={a._id}
-              qty={a.Qty}
-              genre={a.Genre}
-              img={a.img}
-              img2={a.img2}
-              img3={a.img3}
-              img4={a.img4}
-              price={a.price}
-              name={a.name}
-            />
-          ))}
+          {products
+            ?.filter((product) => {
+              if (searchQuery === "") {
+                return products;
+              } else if (
+                product.name.toLowerCase().includes(searchQuery.toLowerCase())
+              ) {
+                return products;
+              }
+            })
+            .map((a) => (
+              <ProductCard
+                key={a._id}
+                id={a._id}
+                qty={a.Qty}
+                genre={a.Genre}
+                img={a.img}
+                img2={a.img2}
+                img3={a.img3}
+                img4={a.img4}
+                price={a.price}
+                name={a.name}
+              />
+            ))}
         </section>
       )}
     </>

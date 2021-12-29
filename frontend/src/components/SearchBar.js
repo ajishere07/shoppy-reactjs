@@ -1,12 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { searchFilter } from "../reduxSlices/Features";
 
 function SearchBar() {
+  const { searchQuery } = useSelector((state) => state.featurefilter);
+  console.log(searchQuery);
+  const dispatch = useDispatch();
+  const [query, setQuery] = useState("");
+  console.log(query);
   return (
     <div className="inline-flex cursor-pointer border-2 border-custom-700 justify-between items-center border-blue-600 rounded-3xl box-border px-2 xl:h-9 md:w-80 w-44 h-8">
       <svg
-        className="w-4"
         xmlns="http://www.w3.org/2000/svg"
-        class="h-6 w-6"
+        className="h-6 w-6"
         fill="none"
         viewBox="0 0 24 24"
         stroke="#5198EC"
@@ -22,6 +28,10 @@ function SearchBar() {
         className="ml-2 border-none outline-none w-full h-4"
         placeholder="search items"
         type="text"
+        onChange={(e) => {
+          setQuery(e.target.value);
+        }}
+        onKeyDown={() => dispatch(searchFilter({ query }))}
       />
     </div>
   );
